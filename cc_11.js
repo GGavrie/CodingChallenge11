@@ -34,3 +34,45 @@ book1.updateCopies(-1);
 // Print the updated details of book1 to the console
 console.log(book1.getDetails());
 // Expected output: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4
+
+
+
+//Task 2 - Creatung a borrower class 
+
+class Borrower {
+    // Constructor to initialize the properties of the Borrower object
+    constructor(name, borrowerId) {
+        this.name = name; // Name of the borrower
+        this.borrowerId = borrowerId; // Unique ID of the borrower
+        this.borrowedBooks = []; // Array to store the titles of borrowed books
+    }
+
+    // Method to add a book to the borrowedBooks array
+    borrowBook(book) {
+        this.borrowedBooks.push(book); // Adds the book title to the end of the array
+    }
+
+    // Method to remove a book from the borrowedBooks array
+    returnBook(book) {
+        // Find the index of the book in the borrowedBooks array
+        const index = this.borrowedBooks.indexOf(book);
+        if (index > -1) { // If the book is found in the array
+            this.borrowedBooks.splice(index, 1); // Remove the book from the array
+        }
+    }
+}
+
+// Test Cases:
+// Create a new Borrower object called borrower1
+const borrower1 = new Borrower("Alice Johnson", 201);
+// Borrow "The Great Gatsby"
+borrower1.borrowBook("The Great Gatsby");
+// Print the borrowedBooks array to the console
+console.log(borrower1.borrowedBooks);
+// Expected output: ["The Great Gatsby"]
+
+// Return "The Great Gatsby"
+borrower1.returnBook("The Great Gatsby");
+// Print the borrowedBooks array to the console
+console.log(borrower1.borrowedBooks);
+// Expected output: []
