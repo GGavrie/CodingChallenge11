@@ -76,3 +76,85 @@ borrower1.returnBook("The Great Gatsby");
 // Print the borrowedBooks array to the console
 console.log(borrower1.borrowedBooks);
 // Expected output: []
+
+//Task 3 - Creting a library class 
+class Library {
+    constructor() {
+      this.books = []; // Array to store Book instances
+      this.borrowers = [];
+    }
+  // Method to add a new book to the library
+    // Method to add a new book to the library
+    addBook(book) {
+      this.books.push(book);
+    }
+  
+    // Method to list all books in the library
+    listBooks() {
+      this.books.forEach(book => {
+        console.log(book); 
+      });
+    }
+    // Method to add a new borrower to the library
+    addBorrower(borrower) {
+        this.borrowers[borrower.id] = borrower;
+      }
+    
+    // Method to lend a book to a borrower
+    lendBook(borrowerId, isbn) {
+        const book = this.books.find(b => b.isbn === isbn);
+        const borrower = this.borrowers[borrowerId];
+    
+        if (book && book.copies > 0 && borrower) {
+          book.copies -= 1;
+          borrower.borrowedBooks.push(book.title);
+        } else {
+          console.log("Cannot lend book: Either book is unavailable or borrower not found.");
+        }
+      }
+      // Method to return a book to the library
+      returnBook(borrowerId, isbn) {
+        // Find the book by ISBN
+        const book = this.books.find(b => b.isbn === isbn);
+        // Find the borrower by ID
+        const borrower = this.borrowers[borrowerId];
+    
+        // Check if the book and borrower exist
+        if (book && borrower) {
+          // Find the index of the book in the borrower's borrowedBooks array
+          const bookIndex = borrower.borrowedBooks.indexOf(book.title);
+          // If the book is found in the borrower's borrowedBooks array
+          if (bookIndex !== -1) {
+            // Increase the number of copies of the book in the library
+            book.copies += 1;
+            // Remove the book from the borrower's borrowedBooks array
+            borrower.borrowedBooks.splice(bookIndex, 1);
+          } else {
+            // If the book is not found in the borrower's borrowedBooks array, log a message
+            console.log("Borrower does not have this book.");
+          }
+        } else {
+          // If the book or borrower is not found, log a message
+          console.log("Cannot return book: Either book or borrower not found.");
+        }
+      }
+    }
+    
+
+  
+  // Test case
+  const library = new Library();
+  const book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "123456", 4);
+  library.addBook(book1);
+  library.listBooks();
+  library.addBook(book1);
+  library.addBorrower(borrower1);
+  library.lendBook(201, "123456");
+  console.log(book1.getDetails()); // Expected: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3"
+  console.log(borrower1.borrowedBooks); // Expected: ["The Great Gatsby"]
+  library.returnBook(201, "123456");
+console.log(book1.getDetails()); // Expected: "Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4"
+console.log(borrower1.borrowedBooks); // Expected: []
+  //Task 4 is in task 3 , i added the borrower method 
+
+  //Task 5 is in task 3 , I added the return method 
